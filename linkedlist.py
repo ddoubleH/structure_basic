@@ -13,7 +13,7 @@ class LinkedList:
         self.current = None
         self.tail = self.head
         self.nodelist = [self.head]
-        self.nodenum = 1
+        self.nodenum = 0
 
     def newNode(self, data):
 
@@ -35,17 +35,25 @@ class LinkedList:
             LinkedList.state = False
 
         # 노드와 노드 사이에 데이터 추가
-        # 값, 인덱스
+        # 값, 인덱스 # 몇 번째를 기준으로 할 것인지
         elif False:
-            pass
+            pass                                      
+                                                      
+        else:
+            for i in range(len(LinkedList.nodelist)):
+                if LinkedList.nodelist[i].data == data:
+                    LinkedList.nodelist[i+1].link = LinkedList.nodelist[i].link
+                    LinkedList.nodelist[i+1].link = newnode
+                    LinkedList.nodelist.append(newnode)
+
 
         # 젤뒤에 연결
-        else:
-            #LinkedList.before = LinkedList.nodelist[-1]
-            #LinkedList.current = newnode
-            LinkedList.tail = newnode
-            LinkedList.nodelist[-1].link = newnode
-            LinkedList.nodelist.append(newnode)  # 뒤에 붙임
+            else:
+                #LinkedList.before = LinkedList.nodelist[-1]
+                #LinkedList.current = newnode
+                LinkedList.tail = newnode
+                LinkedList.nodelist[-1].link = newnode
+                LinkedList.nodelist.append(newnode)  # 뒤에 붙임
 
 
     def info(linkedlist):
@@ -87,15 +95,35 @@ class LinkedList:
         
 
     # 검색 (몇번째 노드인지 출력)
-    def search(self, LinkedList, node):
-        if LinkedList.tail == None:
-            print('No node to search')
-            return
+    def search(self, LinkedList, data):
+        # self.nodenum = 0
+        if self.isEmpty(LinkedList):
+            return 'No node to search'
         else:
-            link = LinkedList.head.link
-            num = 0
-            if node == data:
-                return num
+            for i in range(len(LinkedList.nodelist)):
+                if LinkedList.nodelist[i].data == data:
+                    print('nodenum : ', i)
+                    return self.nodenum
+                elif LinkedList.nodelist[i+1].data == data:
+                    # LinkedList.nodelist[i+1].data = data
+                    i += 1
+
+# def search(self, LinkedList, data):
+    #     if self.isEmpty(LinkedList):
+    #         return 'No node to search'
+    #     else:
+    #         for i in range(len(LinkedList.nodelist)):
+    #             index = 1
+    #             if LinkedList.nodelist[i].data == data:
+    #                 print(index)
+    #                 return index
+    #             else:
+    #                 data = LinkedList.nodelist[i+1].data
+    #                 index += 1
+    #                 print(index)
+    #                 return index
+
+
 
 
 if __name__ == '__main__':
@@ -118,8 +146,8 @@ if __name__ == '__main__':
 
         elif word =='search':
             data = input('Search Node Data > ')
-            node = LinkedList.newNode(data)
-            LinkedList.search(LinkedList, node)
+            LinkedList.search(LinkedList, data)
+
 
         elif word == 'info':
             LinkedList.info()
