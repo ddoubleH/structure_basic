@@ -23,38 +23,30 @@ class LinkedList:
 
         return newNode
 
-    # 추가 (노드와 노드 사이에 데이터 추가)
     def insert(self, LinkedList, newnode):
-
         # 헤드 뒤 연결
         if LinkedList.state:
             LinkedList.head.link = newnode
             LinkedList.nodelist.append(newnode)
-            #LinkedList.current = newnode
-            #LinkedList.before = LinkedList.head
+            self.nodenum = 0
+            print('head', self.nodenum)
             LinkedList.state = False
 
         # 노드와 노드 사이에 데이터 추가
-        # 값, 인덱스 # 몇 번째를 기준으로 할 것인지
-        elif False:
-            pass                                      
-                                                      
+        elif self.nodenum == 3:
+            LinkedList.nodelist[1].link = newnode
+            LinkedList.nodelist[2].data = node.data
+            LinkedList.nodelist[2].link = LinkedList.nodelist[3]
+            print('append data')
+            self.nodenum += 1
+
+        # 테일 뒤 노드 추가
         else:
-            for i in range(len(LinkedList.nodelist)):
-                if LinkedList.nodelist[i].data == data:
-                    LinkedList.nodelist[i+1].link = LinkedList.nodelist[i].link
-                    LinkedList.nodelist[i+1].link = newnode
-                    LinkedList.nodelist.append(newnode)
-
-
-        # 젤뒤에 연결
-            else:
-                #LinkedList.before = LinkedList.nodelist[-1]
-                #LinkedList.current = newnode
-                LinkedList.tail = newnode
-                LinkedList.nodelist[-1].link = newnode
-                LinkedList.nodelist.append(newnode)  # 뒤에 붙임
-
+            LinkedList.tail = newnode
+            LinkedList.nodelist[-1].link = newnode
+            LinkedList.nodelist.append(newnode)
+            print('add tail', self.nodenum)
+            self.nodenum += 1
 
     def info(linkedlist):
         print('LinkedList Head : ', linkedlist.head,
@@ -105,25 +97,7 @@ class LinkedList:
                     print('nodenum : ', i)
                     return self.nodenum
                 elif LinkedList.nodelist[i+1].data == data:
-                    # LinkedList.nodelist[i+1].data = data
                     i += 1
-
-# def search(self, LinkedList, data):
-    #     if self.isEmpty(LinkedList):
-    #         return 'No node to search'
-    #     else:
-    #         for i in range(len(LinkedList.nodelist)):
-    #             index = 1
-    #             if LinkedList.nodelist[i].data == data:
-    #                 print(index)
-    #                 return index
-    #             else:
-    #                 data = LinkedList.nodelist[i+1].data
-    #                 index += 1
-    #                 print(index)
-    #                 return index
-
-
 
 
 if __name__ == '__main__':
@@ -140,14 +114,13 @@ if __name__ == '__main__':
             node = LinkedList.newNode(data)
             LinkedList.insert(LinkedList, node)
 
-        elif word =='delete':
+        elif word == 'delete':
             data = input('Delete Node Data > ')
             LinkedList.delete(LinkedList, removeData=data)
 
-        elif word =='search':
+        elif word == 'search':
             data = input('Search Node Data > ')
             LinkedList.search(LinkedList, data)
-
 
         elif word == 'info':
             LinkedList.info()
