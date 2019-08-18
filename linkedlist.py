@@ -23,30 +23,37 @@ class LinkedList:
 
         return newNode
 
-    def insert(self, LinkedList, newnode):
-        # 헤드 뒤 연결
-        if LinkedList.state:
-            LinkedList.head.link = newnode
-            LinkedList.nodelist.append(newnode)
-            self.nodenum = 0
-            print('head', self.nodenum)
-            LinkedList.state = False
+    def insert(self, LinkedList, newnode, mode='tail'):
 
-        # 노드와 노드 사이에 데이터 추가
-        elif self.nodenum == 3:
-            LinkedList.nodelist[1].link = newnode
-            LinkedList.nodelist[2].data = node.data
-            LinkedList.nodelist[2].link = LinkedList.nodelist[3]
-            print('append data')
+        if mode == 'head': # 노드리스트의 1번째(head 뒤)에 노드 추가
+            newnode.link = LinkedList.nodelist[0].link
+            LinkedList.nodelist.insert(1, newnode)
+            LinkedList.nodelist[0].link = LinkedList.nodelist[1]
             self.nodenum += 1
 
-        # 테일 뒤 노드 추가
-        else:
+        elif mode == 'middle': # idx위치에 삽입 (예, 3번째에 입력하는 경우)
+
+            while True:
+                try:
+                    idx = int(input('노드의 위치(정수)를 입력해주세요 > '))
+                    break
+                except ValueError as e:
+                    print('값이 입력되지 않았거나 정수가 아닌 다른 문자가 입력되었습니다. ')
+
+            newnode.link = LinkedList.nodelist[idx-1].link
+            LinkedList.nodelist.insert(idx, newnode)
+            LinkedList.nodelist[idx-1].link = LinkedList.nodelist[idx]
+            self.nodenum += 1
+
+        elif mode == 'tail': # 노드리스트의 제일 마지막에 노드 추가
             LinkedList.tail = newnode
             LinkedList.nodelist[-1].link = newnode
             LinkedList.nodelist.append(newnode)  # 뒤에 붙임
-            print('add tail', self.nodenum)
             self.nodenum += 1
+
+        else:
+            print('head, middle, tail 모드 중 하나를 입력해주세요. ')
+            return
 
     def info(linkedlist):
         print('LinkedList Head : ', linkedlist.head,
@@ -62,6 +69,10 @@ class LinkedList:
             return True
         else:
             return False
+
+    def getSize(self):
+        #return self.nodenum
+        return len(self.nodelist)
 
     # 삭제 (중복 값 없음)
     # Value, Index
@@ -111,7 +122,9 @@ if __name__ == '__main__':
         elif word == 'insert':
             data = input('Input Node Data > ')
             node = LinkedList.newNode(data)
-            LinkedList.insert(LinkedList, node)
+
+            mode = input('노드의 추가 위치(head, middle, tail)을 선택해주세요. (기본 tail)> ') or 'tail'
+            LinkedList.insert(LinkedList, node, mode)
 
         elif word == 'delete':
             data = input('Delete Node Data > ')
@@ -121,6 +134,8 @@ if __name__ == '__main__':
             data = input('Search Node Data > ')
             LinkedList.search(LinkedList, data)
 
+        elif word == 'size':
+            LinkedList.getSize()
 
         elif word == 'info':
             LinkedList.info()
