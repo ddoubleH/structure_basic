@@ -8,8 +8,12 @@ class stack():
 		self.stack.append(data)
 
 	def pop(self):
-		del self.stack[-1]
-		return
+		try:
+			del self.stack[-1]
+			return True
+		except:
+			return False
+	# return True,  try catch  try catch: true 데이터 삭제 굳이 리턴을 하면 예외처리를 하기 위해서 예외 발생시 false
 
 	def isEmpty(stack):
 		if stack is None:

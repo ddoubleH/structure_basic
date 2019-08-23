@@ -1,3 +1,4 @@
+#Fisrt in first out
 class queue():
 	def __init__(self):
 		self.queue = []
@@ -6,8 +7,11 @@ class queue():
 		self.queue.append(data)
 
 	def dequeue(self):
-		del self.queue[0]
-		return
+		try:
+			del self.queue[0]
+			return True
+		except:
+			return False
 
 	def isEmpty(self, queue):
 		if queue is None:
@@ -28,6 +32,6 @@ if __name__ == '__main__':
 	Q.enqueue(40)
 	Q.enqueue(50)
 	print(Q.queue)
-	print(Q.dequeue())
-	print(Q.dequeue())
+	Q.dequeue()
+	Q.dequeue()
 	print(Q.queue)
